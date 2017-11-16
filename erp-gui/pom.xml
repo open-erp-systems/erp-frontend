@@ -26,6 +26,13 @@
             <artifactId>erp-client-network</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- ini4j -->
+        <dependency>
+            <groupId>org.ini4j</groupId>
+            <artifactId>ini4j</artifactId>
+            <version>${ini4j.version}</version>
+        </dependency>
     </dependencies>
 
 
