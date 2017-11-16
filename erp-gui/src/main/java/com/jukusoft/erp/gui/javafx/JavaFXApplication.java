@@ -26,7 +26,7 @@ public class JavaFXApplication extends Application {
         //save primary stage
         this.primaryStage = primaryStage;
 
-        //create new login window
+        //create and show new login window
         this.loginWindow = new LoginWindow(this.primaryStage, "ERP System - Login    (c) 2017 JuKuSoft.com");
         this.loginWindow.setVisible(true);
     }
