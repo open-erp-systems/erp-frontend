@@ -27,9 +27,20 @@ public class LoginController implements FXMLController, Initializable {
     @FXML
     protected Button loginButton;
 
+    //default values
+    protected String defaultServerIP = "";
+    protected String defaultUsername = "";
+
+    public LoginController (String defaultServerIP, String defaultUsername) {
+        this.defaultServerIP = defaultServerIP;
+        this.defaultUsername = defaultUsername;
+    }
+
     @Override
     public void init(Stage stage, Scene scene, Pane pane) {
-
+        //set default values to text fields
+        this.serverTextField.setText(this.defaultServerIP);
+        this.userTextField.setText(this.defaultUsername);
     }
 
     @Override

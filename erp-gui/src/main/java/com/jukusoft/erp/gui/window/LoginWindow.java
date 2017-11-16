@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 
 public class LoginWindow extends FXMLWindow {
 
-    public LoginWindow(Stage stage, String title) {
-        super(stage, title, 660, 440, "./data/fxml/login_window.fxml", new LoginController());
+    public LoginWindow(Stage stage, String title, String defaultServer, String defaultUsername) {
+        super(stage, title, 660, 440, "./data/fxml/login_window.fxml", new LoginController(defaultServer, defaultUsername));
     }
 
 }
