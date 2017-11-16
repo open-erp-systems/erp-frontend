@@ -1,6 +1,6 @@
 package com.jukusoft.erp.gui;
 
-import com.jukusoft.erp.gui.javafx.JavaFXApplication;
+import com.jukusoft.erp.gui.app.JavaFXApplication;
 import javafx.application.Application;
 
 public class Main {

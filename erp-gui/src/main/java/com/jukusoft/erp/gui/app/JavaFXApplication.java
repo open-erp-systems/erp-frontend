@@ -1,4 +1,4 @@
-package com.jukusoft.erp.gui.javafx;
+package com.jukusoft.erp.gui.app;
 
 import com.jukusoft.erp.gui.window.LoginWindow;
 import javafx.application.Application;
