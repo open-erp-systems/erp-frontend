@@ -11,5 +11,22 @@
 
     <artifactId>erp-gui</artifactId>
 
+    <dependencies>
+        <!-- JUnit tests -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- erp networking -->
+        <dependency>
+            <groupId>com.jukusoft</groupId>
+            <artifactId>erp-client-network</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

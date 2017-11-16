@@ -47,7 +47,7 @@
                   <Label layoutX="10.0" layoutY="119.0" text="User:" GridPane.rowIndex="2" />
                   <TextField fx:id="userTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <PasswordField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="229.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="219.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
          </children>
