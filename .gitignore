@@ -5,8 +5,8 @@
 !.gitignore
 !.travis.yml
 
-.cfg
-*.cfg
+# .cfg
+# *.cfg
 
 ### Windows ###
 # Windows image file caches
