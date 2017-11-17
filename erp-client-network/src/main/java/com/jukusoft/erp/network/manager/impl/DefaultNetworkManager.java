@@ -3,6 +3,7 @@ package com.jukusoft.erp.network.manager.impl;
 import com.jukusoft.erp.network.manager.NetworkManager;
 import com.jukusoft.erp.network.message.Message;
 import com.jukusoft.erp.network.utils.Callback;
+import com.jukusoft.erp.network.utils.NetworkResult;
 
 public class DefaultNetworkManager implements NetworkManager {
 
@@ -19,6 +20,21 @@ public class DefaultNetworkManager implements NetworkManager {
     @Override
     public void init() {
         //
+    }
+
+    @Override
+    public void connect(String ip, int port, Callback<NetworkResult<Boolean>> callback) {
+
+    }
+
+    @Override
+    public boolean isConnected() {
+        return false;
+    }
+
+    @Override
+    public boolean isConnecting() {
+        return false;
     }
 
     @Override
