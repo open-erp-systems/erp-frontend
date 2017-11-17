@@ -48,7 +48,7 @@ public class JavaFXApplication extends Application {
         this.networkManager.init();
 
         //create and show new login window
-        this.loginWindow = new LoginWindow(this.primaryStage, "ERP System - Login    (c) 2017 JuKuSoft.com", defaultCfg.getOrDefault("serverIP", ""), defaultCfg.getOrDefault("user", ""));
+        this.loginWindow = new LoginWindow(this.primaryStage, "ERP System - Login, (c) 2017 JuKuSoft.com", defaultCfg.getOrDefault("serverIP", ""), defaultCfg.getOrDefault("user", ""));
         this.loginWindow.setVisible(true);
     }
 
