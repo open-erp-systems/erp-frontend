@@ -105,11 +105,21 @@ public class LoginController implements FXMLController, Initializable {
                         String array1[] = message.split(":");
                         message = array1[0];
 
+                        if (message.contains("Connection refused")) {
+                            message = "Server isn't available!";
+                        }
+
                         errorTextLabel.setText("Error: " + message);
                         errorTextLabel.setVisible(true);
                     } else {
                         //try to login
                         System.out.println("login");
+
+                        //TODO: try to login
+
+                        //hide login button
+                        this.loginButton.setVisible(false);
+                        this.errorTextLabel.setVisible(false);
                     }
                 });
             });
