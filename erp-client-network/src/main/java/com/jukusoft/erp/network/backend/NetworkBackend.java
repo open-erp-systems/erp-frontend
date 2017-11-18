@@ -17,6 +17,8 @@ public interface NetworkBackend<T> {
 
     public void disconnect ();
 
+    public boolean isConnected ();
+
     /**
     * send message to server
      *

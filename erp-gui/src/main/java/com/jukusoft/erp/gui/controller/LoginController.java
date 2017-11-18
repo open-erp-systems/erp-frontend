@@ -3,12 +3,14 @@ package com.jukusoft.erp.gui.controller;
 import com.jukusoft.erp.gui.javafx.FXMLController;
 import com.jukusoft.erp.network.manager.NetworkManager;
 import com.jukusoft.erp.network.utils.NetworkResult;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -44,36 +46,48 @@ public class LoginController implements FXMLController, Initializable {
         this.serverTextField.setText(this.defaultServerIP);
         this.userTextField.setText(this.defaultUsername);
 
+        this.passwordTextField.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                connect();
+            }
+        });
+
         this.loginButton.setOnAction((event) -> {
-            //get server ip and port
-            String server = serverTextField.getText();
-            String[] array = server.split(":");
+            connect();
+        });
+    }
 
-            String serverIP = "";
-            int port = 2200;
+    protected void connect () {
+        //disable login button
+        this.loginButton.setText("Connecting...");
+        this.loginButton.setDisable(true);
 
-            if (array.length > 1) {
-                serverIP = array[0];
-                port = Integer.parseInt(array[1]);
-            } else {
-                serverIP = array[0];
-            }
+        //get server ip and port
+        String server = serverTextField.getText();
+        String[] array = server.split(":");
 
-            //get network manager
-            NetworkManager network = NetworkManager.getInstance();
+        String serverIP = "";
+        int port = 2200;
 
-            //check, if client is already connecting
-            if (network.isConnecting()) {
-                System.out.println("client is already connecting.");
-                return;
-            }
+        if (array.length > 1) {
+            serverIP = array[0];
+            port = Integer.parseInt(array[1]);
+        } else {
+            serverIP = array[0];
+        }
 
-            //disable login button
-            this.loginButton.setText("Connecting...");
-            this.loginButton.setDisable(true);
+        //get network manager
+        NetworkManager network = NetworkManager.getInstance();
 
-            //try to connect
-            NetworkManager.getInstance().connect(serverIP, port, (NetworkResult<Boolean> res) -> {
+        //check, if client is already connecting
+        if (network.isConnecting()) {
+            System.out.println("client is already connecting.");
+            return;
+        }
+
+        //try to connect
+        NetworkManager.getInstance().connect(serverIP, port, (NetworkResult<Boolean> res) -> {
+            Platform.runLater(() -> {
                 if (!res.succeeded()) {
                     this.loginButton.setText("Login");
                     this.loginButton.setDisable(false);

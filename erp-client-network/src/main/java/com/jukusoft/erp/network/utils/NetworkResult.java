@@ -34,4 +34,20 @@ public interface NetworkResult<T> {
         return new WritableNetworkResult<>();
     }
 
+    public static <T> WritableNetworkResult<T> complete (T result) {
+        WritableNetworkResult<T> res = new WritableNetworkResult<>();
+
+        res.complete(result);
+
+        return res;
+    }
+
+    public static <T> WritableNetworkResult<T> fail (Throwable cause) {
+        WritableNetworkResult<T> res = new WritableNetworkResult<>();
+
+        res.fail(cause);
+
+        return res;
+    }
+
 }

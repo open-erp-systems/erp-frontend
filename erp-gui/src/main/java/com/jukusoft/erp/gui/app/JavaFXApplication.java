@@ -40,6 +40,10 @@ public class JavaFXApplication extends Application {
         //save primary stage
         this.primaryStage = primaryStage;
 
+        primaryStage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
+
         //read default config
         this.readDefaultConfig();
 
