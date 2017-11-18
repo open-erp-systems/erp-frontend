@@ -103,7 +103,7 @@ public class LoginController implements FXMLController, Initializable {
 
                         String message = res.cause().getMessage();
                         String array1[] = message.split(":");
-                        message = array[0];
+                        message = array1[0];
 
                         errorTextLabel.setText("Error: " + message);
                         errorTextLabel.setVisible(true);
