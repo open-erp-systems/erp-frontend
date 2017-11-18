@@ -58,9 +58,11 @@ public class LoginController implements FXMLController, Initializable {
     }
 
     protected void connect () {
+        //get network manager
+        NetworkManager network = NetworkManager.getInstance();
+
         //disable login button
-        this.loginButton.setText("Connecting...");
-        this.loginButton.setDisable(true);
+        disableButton();
 
         //get server ip and port
         String server = serverTextField.getText();
@@ -76,27 +78,40 @@ public class LoginController implements FXMLController, Initializable {
             serverIP = array[0];
         }
 
-        //get network manager
-        NetworkManager network = NetworkManager.getInstance();
-
         //check, if client is already connecting
         if (network.isConnecting()) {
             System.out.println("client is already connecting.");
             return;
         }
 
-        //try to connect
-        NetworkManager.getInstance().connect(serverIP, port, (NetworkResult<Boolean> res) -> {
-            Platform.runLater(() -> {
-                if (!res.succeeded()) {
-                    this.loginButton.setText("Login");
-                    this.loginButton.setDisable(false);
-                } else {
-                    //try to login
-                    System.out.println("login");
-                }
+        final String serverIP1 = serverIP;
+        final int port1 = port;
+
+        //execute in network thread
+        network.executeBlocking(() -> {
+            //try to connect
+            network.connect(serverIP1, port1, (NetworkResult<Boolean> res) -> {
+                Platform.runLater(() -> {
+                    if (!res.succeeded()) {
+                        enableButton();
+                    } else {
+                        //try to login
+                        System.out.println("login");
+                    }
+                });
             });
         });
+    }
+
+    protected void disableButton () {
+        //disable login button
+        this.loginButton.setText("Connecting...");
+        this.loginButton.setDisable(true);
+    }
+
+    protected void enableButton () {
+        this.loginButton.setText("Login");
+        this.loginButton.setDisable(false);
     }
 
     @Override

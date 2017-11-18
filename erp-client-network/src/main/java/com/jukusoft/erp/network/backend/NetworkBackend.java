@@ -33,4 +33,6 @@ public interface NetworkBackend<T> {
     */
     public void setMessageReceiver (MessageReceiver<T> receiver);
 
+    public void executeBlocking (Runnable runnable);
+
 }

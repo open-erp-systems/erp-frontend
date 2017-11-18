@@ -27,6 +27,8 @@ public interface NetworkManager {
 
     public void login ();
 
+    public void executeBlocking (Runnable runnable);
+
     public static NetworkManager getInstance () {
         return DefaultNetworkManager.getManagerInstance();
     }

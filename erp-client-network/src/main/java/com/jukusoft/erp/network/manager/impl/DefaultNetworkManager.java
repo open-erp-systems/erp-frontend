@@ -87,6 +87,11 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
     }
 
     @Override
+    public void executeBlocking(Runnable runnable) {
+        this.networkBackend.executeBlocking(runnable);
+    }
+
+    @Override
     public void onReceive(String msg) {
         //
     }

@@ -43,23 +43,21 @@ public class VertxNetworkBackend implements NetworkBackend<String> {
     public VertxNetworkBackend () {
         this.options = new VertxOptions();
 
-        //set connection timeout of 1 seconds
-        this.netClientOptions.setConnectTimeout(1000);
+        //create new vertx.io instance
+        this.vertx = Vertx.vertx(this.options);
 
-        //if connection fails, try 5x
-        this.netClientOptions.setReconnectAttempts(5)
-                .setReconnectInterval(500);
+        //set connection timeout of 1 seconds
+        this.netClientOptions.setConnectTimeout(5000);
+
+        //if connection fails, try 1x
+        /*this.netClientOptions.setReconnectAttempts(5)
+                .setReconnectInterval(500);*/
     }
 
     @Override
     public void connect(String server, int port, Callback<NetworkResult<Boolean>> callback) {
         if (this.messageReceiver == null) {
             throw new IllegalStateException("You have to set an message receiver first.");
-        }
-
-        if (this.vertx == null) {
-            //create new vertx.io instance
-            this.vertx = Vertx.vertx(this.options);
         }
 
         //create new network client
@@ -141,6 +139,19 @@ public class VertxNetworkBackend implements NetworkBackend<String> {
     @Override
     public void setMessageReceiver(MessageReceiver<String> receiver) {
         this.messageReceiver = receiver;
+    }
+
+    @Override
+    public void executeBlocking(Runnable runnable) {
+        this.vertx.executeBlocking(future -> {
+            //execute blocking code
+            runnable.run();
+
+            //task was executed
+            future.complete();
+        }, res -> {
+            //
+        });
     }
 
 }
