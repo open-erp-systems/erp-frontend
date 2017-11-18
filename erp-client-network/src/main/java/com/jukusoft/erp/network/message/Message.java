@@ -1,5 +1,6 @@
 package com.jukusoft.erp.network.message;
 
+import com.jukusoft.erp.network.json.JsonSerializable;
 import io.vertx.core.json.JsonObject;
 
 import java.util.UUID;
@@ -7,7 +8,7 @@ import java.util.UUID;
 /**
 * object for an message
 */
-public class Message {
+public class Message implements JsonSerializable {
 
     //session ID
     protected String ssid = "";
@@ -27,6 +28,26 @@ public class Message {
         //
     }
 
+    public String getEvent () {
+        return this.event;
+    }
+
+    public JsonObject getData() {
+        return this.data;
+    }
+
+    public void setSSID (String ssid) {
+        this.ssid = ssid;
+    }
+
+    public UUID getID () {
+        return this.uuid;
+    }
+
+    public String getIDAsString () {
+        return this.uuid.toString();
+    }
+
     public static Message createRequest (String event) {
         //create new message
         Message message = new Message();
@@ -44,6 +65,22 @@ public class Message {
         message.type = type;
 
         return message;
+    }
+
+    @Override
+    public JsonObject toJSON() {
+        JsonObject json = new JsonObject();
+
+        return json;
+    }
+
+    @Override
+    public String toString () {
+        return toJSON().encode();
+    }
+
+    public String encode () {
+        return toString();
     }
 
 }

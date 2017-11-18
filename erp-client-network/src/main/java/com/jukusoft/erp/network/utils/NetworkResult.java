@@ -42,6 +42,14 @@ public interface NetworkResult<T> {
         return res;
     }
 
+    public static <T> WritableNetworkResult<T> fail (Throwable cause, Class<T> cls) {
+        WritableNetworkResult<T> res = new WritableNetworkResult<>();
+
+        res.fail(cause);
+
+        return res;
+    }
+
     public static <T> WritableNetworkResult<T> fail (Throwable cause) {
         WritableNetworkResult<T> res = new WritableNetworkResult<>();
 

@@ -50,6 +50,18 @@ public class LoginController implements FXMLController, Initializable {
         this.serverTextField.setText(this.defaultServerIP);
         this.userTextField.setText(this.defaultUsername);
 
+        this.serverTextField.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                connect();
+            }
+        });
+
+        this.userTextField.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                connect();
+            }
+        });
+
         this.passwordTextField.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 connect();
@@ -64,6 +76,9 @@ public class LoginController implements FXMLController, Initializable {
     }
 
     protected void connect () {
+        //hide old error text first
+        this.errorTextLabel.setVisible(false);
+
         //get network manager
         NetworkManager network = NetworkManager.getInstance();
 
@@ -115,10 +130,12 @@ public class LoginController implements FXMLController, Initializable {
                         //try to login
                         System.out.println("login");
 
+                        loginButton.setText("Login...");
+
                         //TODO: try to login
 
                         //hide login button
-                        this.loginButton.setVisible(false);
+                        //this.loginButton.setVisible(false);
                         this.errorTextLabel.setVisible(false);
                     }
                 });

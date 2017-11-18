@@ -2,9 +2,9 @@ package com.jukusoft.erp.network.manager;
 
 import com.jukusoft.erp.network.manager.impl.DefaultNetworkManager;
 import com.jukusoft.erp.network.message.Message;
+import com.jukusoft.erp.network.user.Account;
 import com.jukusoft.erp.network.utils.Callback;
 import com.jukusoft.erp.network.utils.NetworkResult;
-import io.vertx.core.AsyncResult;
 
 public interface NetworkManager {
 
@@ -19,13 +19,13 @@ public interface NetworkManager {
 
     public boolean isConnecting ();
 
-    public void send (Message msg, Callback<Message> callback);
+    public void send (Message msg, Callback<NetworkResult<Message>> callback);
 
     public void addSubscriber (String event, Callback<Message> callback);
 
     public void removeSubscriber (String event, Callback<Message> callback);
 
-    public void login ();
+    public void login (String username, String password, Callback<NetworkResult<Account>> callback);
 
     public void executeBlocking (Runnable runnable);
 

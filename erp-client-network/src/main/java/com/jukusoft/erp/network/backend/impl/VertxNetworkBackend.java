@@ -4,6 +4,7 @@ import com.jukusoft.erp.network.backend.NetworkBackend;
 import com.jukusoft.erp.network.message.MessageReceiver;
 import com.jukusoft.erp.network.utils.Callback;
 import com.jukusoft.erp.network.utils.NetworkResult;
+import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.net.NetClient;
@@ -152,6 +153,18 @@ public class VertxNetworkBackend implements NetworkBackend<String> {
         }, res -> {
             //
         });
+    }
+
+    @Override
+    public long startTimer(long delay, Runnable runnable) {
+        return this.vertx.setPeriodic(delay, event -> {
+            runnable.run();
+        });
+    }
+
+    @Override
+    public void stopTimer(long timerID) {
+        this.vertx.cancelTimer(timerID);
     }
 
 }

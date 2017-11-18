@@ -35,4 +35,21 @@ public interface NetworkBackend<T> {
 
     public void executeBlocking (Runnable runnable);
 
+    /**
+    * create and start new timer
+     *
+     * @param time delay time in ms
+     * @param runnable runnable to execute
+     *
+     * @return timer ID
+    */
+    public long startTimer (long time, Runnable runnable);
+
+    /**
+    * stop existing timer
+     *
+     * @param timerID timer ID
+    */
+    public void stopTimer (long timerID);
+
 }
