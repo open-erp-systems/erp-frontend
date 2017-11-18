@@ -50,6 +50,11 @@
                   <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="219.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
+            <Label fx:id="errorTextLabel" layoutX="108.0" layoutY="313.0" prefHeight="17.0" prefWidth="438.0" text="Error Text" textFill="#dd0e0e">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
   </children>

@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -30,6 +31,9 @@ public class LoginController implements FXMLController, Initializable {
 
     @FXML
     protected Button loginButton;
+
+    @FXML
+    protected Label errorTextLabel;
 
     //default values
     protected String defaultServerIP = "";
@@ -55,6 +59,8 @@ public class LoginController implements FXMLController, Initializable {
         this.loginButton.setOnAction((event) -> {
             connect();
         });
+
+        this.errorTextLabel.setVisible(false);
     }
 
     protected void connect () {
@@ -94,6 +100,13 @@ public class LoginController implements FXMLController, Initializable {
                 Platform.runLater(() -> {
                     if (!res.succeeded()) {
                         enableButton();
+
+                        String message = res.cause().getMessage();
+                        String array1[] = message.split(":");
+                        message = array[0];
+
+                        errorTextLabel.setText("Error: " + message);
+                        errorTextLabel.setVisible(true);
                     } else {
                         //try to login
                         System.out.println("login");
