@@ -134,7 +134,10 @@ public class VertxNetworkBackend implements NetworkBackend<String> {
 
     @Override
     public void send(String msg) {
+        //log
+        System.out.println("WRITE: " + msg);
 
+        this.socket.write(msg);
     }
 
     @Override

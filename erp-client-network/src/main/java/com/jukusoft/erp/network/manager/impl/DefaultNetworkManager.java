@@ -105,6 +105,9 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
 
     @Override
     public void login(String username, String password, Callback<NetworkResult<Account>> callback) {
+        //log
+        System.out.println("Try to login user '" + username + "'...");
+
         //create new message
         Message msg = Message.createRequest("auth");
 

@@ -71,6 +71,17 @@ public class Message implements JsonSerializable {
     public JsonObject toJSON() {
         JsonObject json = new JsonObject();
 
+        //add header information
+        json.put("event", this.event);
+        json.put("messageID", this.uuid.toString());
+
+        //add message body
+        json.put("data", this.data);
+
+        if (!this.ssid.isEmpty()) {
+            json.put("ssid", this.ssid);
+        }
+
         return json;
     }
 
