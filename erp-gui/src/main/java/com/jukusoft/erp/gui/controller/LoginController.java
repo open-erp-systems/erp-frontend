@@ -99,6 +99,10 @@ public class LoginController implements FXMLController, Initializable {
             serverIP = array[0];
         }
 
+        //get username and password
+        String username = this.userTextField.getText();
+        String password = this.passwordTextField.getText();
+
         //check, if client is already connecting
         if (network.isConnecting()) {
             System.out.println("client is already connecting.");
@@ -132,7 +136,23 @@ public class LoginController implements FXMLController, Initializable {
 
                         loginButton.setText("Login...");
 
-                        //TODO: try to login
+                        network.login(username, password, res1 -> {
+                            Platform.runLater(() -> {
+                                if (!res1.succeeded()) {
+                                    System.out.println("Couldnt login! " + res1.cause().getMessage());
+
+                                    errorTextLabel.setText("Error: " + res1.cause().getMessage());
+                                    errorTextLabel.setVisible(true);
+                                } else {
+                                    System.out.println("Login successfully!");
+
+                                    //TODO: go to next window
+
+                                    //hide login button
+                                    this.loginButton.setVisible(false);
+                                }
+                            });
+                        });
 
                         //hide login button
                         //this.loginButton.setVisible(false);
