@@ -94,4 +94,18 @@ public class Message implements JsonSerializable {
         return toString();
     }
 
+    public static Message createFromJSON (JsonObject json) {
+        Message message = new Message();
+
+        //get header information
+        message.event = json.getString("event");
+        String messageID = json.getString("messageID");
+        int statusCode = json.getInteger("statusCode");
+        message.type = ResponseType.getByString(json.getString("status"));
+        message.data = json.getJsonObject("data");
+        message.ssid = json.getString("ssid");
+
+        return message;
+    }
+
 }

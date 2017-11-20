@@ -1,16 +1,19 @@
 package com.jukusoft.erp.network.backend.impl;
 
 import com.jukusoft.erp.network.backend.NetworkBackend;
+import com.jukusoft.erp.network.message.Message;
 import com.jukusoft.erp.network.message.MessageReceiver;
 import com.jukusoft.erp.network.utils.Callback;
 import com.jukusoft.erp.network.utils.NetworkResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.net.NetClient;
 import io.vertx.core.net.NetClientOptions;
 import io.vertx.core.net.NetSocket;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class VertxNetworkBackend implements NetworkBackend<String> {
@@ -117,19 +120,16 @@ public class VertxNetworkBackend implements NetworkBackend<String> {
         });
 
         //add message handler
-        /*socket.handler(buffer -> {
+        socket.handler(buffer -> {
             //convert to string and json object
             String str = buffer.toString(StandardCharsets.UTF_8);
-            JSONObject json = new JSONObject(str);
 
             //System.out.println("message received: " + str);
 
-            //convert to chat message
-            ChatMessage msg = ChatMessage.create(json);
+            System.out.println("RECEIVE: " + str);
 
-            //call message receiver
-            messageReceiver.messageReceived(msg);
-        });*/
+            this.messageReceiver.onReceive(str);
+        });
     }
 
     @Override
