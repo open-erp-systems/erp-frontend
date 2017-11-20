@@ -115,12 +115,12 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
 
     @Override
     public void addSubscriber(String event, Callback<Message> callback) {
-
+        this.eventMap.put(event, callback);
     }
 
     @Override
     public void removeSubscriber(String event, Callback<Message> callback) {
-
+        this.eventMap.remove(event, callback);
     }
 
     @Override
