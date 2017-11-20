@@ -7,6 +7,7 @@ public class WritableNetworkResult<T> implements NetworkResult<T> {
 
     protected T result = null;
     protected Throwable cause = null;
+    protected String causeMessage = "";
 
     @Override
     public T result() {
@@ -20,6 +21,15 @@ public class WritableNetworkResult<T> implements NetworkResult<T> {
     @Override
     public Throwable cause() {
         return this.cause;
+    }
+
+    @Override
+    public String causeMessage() {
+        if (this.causeMessage.isEmpty()) {
+            return this.cause.getMessage();
+        } else {
+            return this.causeMessage;
+        }
     }
 
     @Override
@@ -39,6 +49,12 @@ public class WritableNetworkResult<T> implements NetworkResult<T> {
 
     public void fail (Throwable cause) {
         this.cause = cause;
+        this.failed = true;
+    }
+
+    public void fail (String causeMessage) {
+        this.cause = new Exception(causeMessage);
+        this.causeMessage = causeMessage;
         this.failed = true;
     }
 

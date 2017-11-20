@@ -127,14 +127,14 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
                 Message response = res.result();
 
                 if (!response.succeeded()) {
-                    callback.handle(NetworkResult.fail(new Throwable("Error: " + response.getType().name())));
+                    callback.handle(NetworkResult.fail("Error: " + response.getType().name()));
 
                     return;
                 }
 
                 //check, if user is logged in
                 if (!response.getData().getString("login_state").equals("success")) {
-                    callback.handle(NetworkResult.fail(res.cause()));
+                    callback.handle(NetworkResult.fail(response.getData().getString("login_message")));
                 } else {
                     //get data
                     String loginMessage = response.getData().getString("login_message");

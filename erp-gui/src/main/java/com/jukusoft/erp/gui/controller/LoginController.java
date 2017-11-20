@@ -139,7 +139,7 @@ public class LoginController implements FXMLController, Initializable {
                         network.login(username, password, res1 -> {
                             Platform.runLater(() -> {
                                 if (!res1.succeeded()) {
-                                    System.out.println("Couldnt login! " + res1.cause().getMessage());
+                                    System.out.println("Couldnt login! " + res1.causeMessage());
 
                                     errorTextLabel.setText("Error: " + res1.cause().getMessage());
                                     errorTextLabel.setVisible(true);

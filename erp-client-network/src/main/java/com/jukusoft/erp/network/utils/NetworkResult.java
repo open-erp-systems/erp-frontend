@@ -17,6 +17,13 @@ public interface NetworkResult<T> {
     Throwable cause();
 
     /**
+    * get cause message
+     *
+     * @return cause message
+    */
+    String causeMessage ();
+
+    /**
      * Did it succeed?
      *
      * @return true if it succeded or false otherwise
@@ -51,6 +58,14 @@ public interface NetworkResult<T> {
     }
 
     public static <T> WritableNetworkResult<T> fail (Throwable cause) {
+        WritableNetworkResult<T> res = new WritableNetworkResult<>();
+
+        res.fail(cause);
+
+        return res;
+    }
+
+    public static <T> WritableNetworkResult<T> fail (String cause) {
         WritableNetworkResult<T> res = new WritableNetworkResult<>();
 
         res.fail(cause);
