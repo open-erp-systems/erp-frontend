@@ -105,6 +105,11 @@ public class Message implements JsonSerializable {
         message.data = json.getJsonObject("data");
         message.ssid = json.getString("ssid");
 
+        if (!messageID.isEmpty() && !message.equals("none")) {
+            //get UUID
+            message.uuid = UUID.fromString(messageID);
+        }
+
         return message;
     }
 
