@@ -48,6 +48,14 @@ public class Message implements JsonSerializable {
         return this.uuid.toString();
     }
 
+    public boolean succeeded () {
+        return this.type == ResponseType.OK;
+    }
+
+    public ResponseType getType() {
+        return this.type;
+    }
+
     public static Message createRequest (String event) {
         //create new message
         Message message = new Message();

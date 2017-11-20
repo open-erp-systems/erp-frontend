@@ -8,6 +8,7 @@ import com.jukusoft.erp.network.message.MessageReceiver;
 import com.jukusoft.erp.network.user.Account;
 import com.jukusoft.erp.network.utils.Callback;
 import com.jukusoft.erp.network.utils.NetworkResult;
+import io.vertx.core.json.JsonObject;
 
 import java.util.Map;
 import java.util.UUID;
@@ -29,6 +30,9 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
     protected Map<UUID,Callback<NetworkResult<Message>>> callbackMap = new ConcurrentHashMap<>();
 
     protected Account account = null;
+
+    //global event handlers
+    protected Map<String,Callback<Message>> eventMap = new ConcurrentHashMap<>();
 
     protected DefaultNetworkManager () {
         //create new vertx network backend
@@ -122,6 +126,12 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
                 //get response
                 Message response = res.result();
 
+                if (!response.succeeded()) {
+                    callback.handle(NetworkResult.fail(new Throwable("Error: " + response.getType().name())));
+
+                    return;
+                }
+
                 //check, if user is logged in
                 if (!response.getData().getString("login_state").equals("success")) {
                     callback.handle(NetworkResult.fail(res.cause()));
@@ -148,7 +158,41 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
 
     @Override
     public void onReceive(String msg) {
-        //
+        //convert to message
+        JsonObject json = new JsonObject(msg);
+        Message message = Message.createFromJSON(json);
+
+        //get event specific handler
+        Callback<Message> eCallback = this.eventMap.get(message.getEvent());
+
+        //call event callback
+        if (eCallback != null) {
+            eCallback.handle(message);
+        }
+
+        //check, if messageID exists
+        if (message.getID() != null) {
+            //get callback handler
+            Callback<NetworkResult<Message>> callback = this.callbackMap.get(message.getID());
+
+            if (callback == null) {
+                throw new IllegalStateException("Cannot found callback handler for messageID: " + message.getID());
+            }
+
+            try {
+                //handle message
+                callback.handle(NetworkResult.complete(message));
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                System.err.println("Couldnt handle message: " + message + ", exception was thrown: " + e.getLocalizedMessage());
+            }
+
+            //remove handler from map
+            this.callbackMap.remove(message.getID());
+        } else {
+            System.err.println("No callback found for messageID: " + message.getID() + ", message: " + message);
+        }
     }
 
 }

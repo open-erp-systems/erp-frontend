@@ -143,6 +143,8 @@ public class LoginController implements FXMLController, Initializable {
 
                                     errorTextLabel.setText("Error: " + res1.cause().getMessage());
                                     errorTextLabel.setVisible(true);
+
+                                    enableButton();
                                 } else {
                                     System.out.println("Login successfully!");
 
