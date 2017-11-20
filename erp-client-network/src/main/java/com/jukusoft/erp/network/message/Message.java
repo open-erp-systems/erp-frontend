@@ -103,7 +103,7 @@ public class Message implements JsonSerializable {
     }
 
     public String encode () {
-        return toString();
+        return toJSON().encode();
     }
 
     public static Message createFromJSON (JsonObject json) {
