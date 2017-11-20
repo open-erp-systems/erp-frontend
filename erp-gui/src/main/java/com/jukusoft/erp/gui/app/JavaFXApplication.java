@@ -6,6 +6,7 @@ import com.jukusoft.erp.gui.window.MainWindow;
 import com.jukusoft.erp.network.manager.NetworkManager;
 import com.jukusoft.erp.network.user.Account;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.ini4j.Ini;
 import org.ini4j.Profile;
@@ -83,18 +84,22 @@ public class JavaFXApplication extends Application {
 
         //add event listener for warnings notifications#
         NetworkManager.getInstance().addSubscriber("warning_notification", msg -> {
-            String title = msg.getData().getString("title");
-            String text = msg.getData().getString("text");
+            Platform.runLater(() -> {
+                String title = msg.getData().getString("title");
+                String text = msg.getData().getString("text");
 
-            JavaFXUtils.showErrorDialog(title, text);
+                JavaFXUtils.showErrorDialog(title, text);
+            });
         });
 
         //add event listener for important notifications#
         NetworkManager.getInstance().addSubscriber("important_notification", msg -> {
-            String title = msg.getData().getString("title");
-            String text = msg.getData().getString("text");
+            Platform.runLater(() -> {
+                String title = msg.getData().getString("title");
+                String text = msg.getData().getString("text");
 
-            JavaFXUtils.showInfoDialog(title, text);
+                JavaFXUtils.showInfoDialog(title, text);
+            });
         });
 
         //create and show new main window
