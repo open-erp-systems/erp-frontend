@@ -2,6 +2,8 @@ package com.jukusoft.erp.gui.controller;
 
 import com.jukusoft.erp.gui.javafx.FXMLController;
 import com.jukusoft.erp.network.manager.NetworkManager;
+import com.jukusoft.erp.network.user.Account;
+import com.jukusoft.erp.network.utils.Callback;
 import com.jukusoft.erp.network.utils.NetworkResult;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -39,9 +41,17 @@ public class LoginController implements FXMLController, Initializable {
     protected String defaultServerIP = "";
     protected String defaultUsername = "";
 
-    public LoginController (String defaultServerIP, String defaultUsername) {
+    protected Callback<Account> successfulLoginCallback = null;
+
+    public LoginController (String defaultServerIP, String defaultUsername, Callback<Account> successfulLoginCallback) {
         this.defaultServerIP = defaultServerIP;
         this.defaultUsername = defaultUsername;
+
+        if (successfulLoginCallback == null) {
+            throw new NullPointerException("login callback cannot be null.");
+        }
+
+        this.successfulLoginCallback = successfulLoginCallback;
     }
 
     @Override
@@ -148,10 +158,11 @@ public class LoginController implements FXMLController, Initializable {
                                 } else {
                                     System.out.println("Login successfully!");
 
-                                    //TODO: go to next window
-
                                     //hide login button
                                     this.loginButton.setVisible(false);
+
+                                    //call callback (to go to next window or do something)
+                                    this.successfulLoginCallback.handle(res1.result());
                                 }
                             });
                         });

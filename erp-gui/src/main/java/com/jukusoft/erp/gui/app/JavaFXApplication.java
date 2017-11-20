@@ -2,6 +2,7 @@ package com.jukusoft.erp.gui.app;
 
 import com.jukusoft.erp.gui.window.LoginWindow;
 import com.jukusoft.erp.network.manager.NetworkManager;
+import com.jukusoft.erp.network.user.Account;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.ini4j.Ini;
@@ -52,7 +53,7 @@ public class JavaFXApplication extends Application {
         this.networkManager.init();
 
         //create and show new login window
-        this.loginWindow = new LoginWindow(this.primaryStage, "ERP System - Login, (c) 2017 JuKuSoft.com", defaultCfg.getOrDefault("serverIP", ""), defaultCfg.getOrDefault("user", ""));
+        this.loginWindow = new LoginWindow(this.primaryStage, "ERP System - Login, (c) 2017 JuKuSoft.com", defaultCfg.getOrDefault("serverIP", ""), defaultCfg.getOrDefault("user", ""), this::onLogin);
         this.loginWindow.setVisible(true);
     }
 
@@ -67,6 +68,10 @@ public class JavaFXApplication extends Application {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    protected void onLogin (Account account) {
+        System.out.println("User '" + account.getUsername() + "' (userID: " + account.getUserID() + ") logged in successfully.");
     }
 
 }

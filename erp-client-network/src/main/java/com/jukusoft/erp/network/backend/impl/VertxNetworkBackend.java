@@ -159,15 +159,22 @@ public class VertxNetworkBackend implements NetworkBackend<String> {
     }
 
     @Override
-    public long startTimer(long delay, Runnable runnable) {
+    public long startPeriodicTimer(long delay, Runnable runnable) {
         return this.vertx.setPeriodic(delay, event -> {
             runnable.run();
         });
     }
 
     @Override
-    public void stopTimer(long timerID) {
+    public void stopPeriodicTimer(long timerID) {
         this.vertx.cancelTimer(timerID);
+    }
+
+    @Override
+    public long executeDelayed(long delay, Runnable runnable) {
+        return this.vertx.setTimer(delay, id -> {
+            runnable.run();
+        });
     }
 
 }

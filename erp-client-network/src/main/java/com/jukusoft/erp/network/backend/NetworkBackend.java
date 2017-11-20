@@ -43,13 +43,23 @@ public interface NetworkBackend<T> {
      *
      * @return timer ID
     */
-    public long startTimer (long time, Runnable runnable);
+    public long startPeriodicTimer (long time, Runnable runnable);
 
     /**
     * stop existing timer
      *
      * @param timerID timer ID
     */
-    public void stopTimer (long timerID);
+    public void stopPeriodicTimer (long timerID);
+
+    /**
+    * execute runnable after an given time
+     *
+     * @param time delay time in ms
+     * @param runnable runnable to execute
+     *
+     * @return timer ID
+    */
+    public long executeDelayed (long time, Runnable runnable);
 
 }

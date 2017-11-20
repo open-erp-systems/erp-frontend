@@ -34,6 +34,8 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
     //global event handlers
     protected Map<String,Callback<Message>> eventMap = new ConcurrentHashMap<>();
 
+    protected static final long RESPONSE_TIMEOUT = 3000;
+
     protected DefaultNetworkManager () {
         //create new vertx network backend
         this.networkBackend = new VertxNetworkBackend();
@@ -92,6 +94,20 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
 
         //add callback to map
         this.callbackMap.put(msg.getID(), callback);
+
+        //add timer
+        this.networkBackend.executeDelayed(RESPONSE_TIMEOUT, () -> {
+            //check, if UUID is already in map
+            if (this.callbackMap.get(msg.getID()) != null) {
+                //remove callback
+                this.callbackMap.remove(msg.getID());
+
+                System.err.println("Response timeout reached: " + msg);
+
+                //call failed handler
+                callback.handle(NetworkResult.fail("Response timeout reached."));
+            }
+        });
 
         //send message
         this.networkBackend.send(msg.encode());
@@ -179,6 +195,9 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
                 throw new IllegalStateException("Cannot found callback handler for messageID: " + message.getID());
             }
 
+            //remove handler from map
+            this.callbackMap.remove(message.getID());
+
             try {
                 //handle message
                 callback.handle(NetworkResult.complete(message));
@@ -187,9 +206,6 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
 
                 System.err.println("Couldnt handle message: " + message + ", exception was thrown: " + e.getLocalizedMessage());
             }
-
-            //remove handler from map
-            this.callbackMap.remove(message.getID());
         } else {
             System.err.println("No callback found for messageID: " + message.getID() + ", message: " + message);
         }
