@@ -10,6 +10,8 @@ import com.jukusoft.erp.network.utils.Callback;
 import com.jukusoft.erp.network.utils.NetworkResult;
 import io.vertx.core.json.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,6 +37,9 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
     protected Map<String,Callback<Message>> eventMap = new ConcurrentHashMap<>();
 
     protected static final long RESPONSE_TIMEOUT = 3000;
+
+    //list with all global subscribers
+    protected List<Callback<Message>> globalSubsribers = new ArrayList<>();
 
     protected DefaultNetworkManager () {
         //create new vertx network backend
@@ -77,7 +82,7 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
 
     @Override
     public boolean isConnected() {
-        return false;
+        return this.networkBackend.isConnected();
     }
 
     @Override
@@ -121,6 +126,16 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
     @Override
     public void removeSubscriber(String event, Callback<Message> callback) {
         this.eventMap.remove(event, callback);
+    }
+
+    @Override
+    public void addGlobalSubscriber(Callback<Message> callback) {
+        this.globalSubsribers.add(callback);
+    }
+
+    @Override
+    public void removeGlobalSubscriber(Callback<Message> callback) {
+        this.globalSubsribers.remove(callback);
     }
 
     @Override
@@ -184,6 +199,14 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
         //call event callback
         if (eCallback != null) {
             eCallback.handle(message);
+        }
+
+        //call all global listeners
+        synchronized (this.globalSubsribers) {
+            for (Callback<Message> callback : this.globalSubsribers) {
+                //call listener
+                callback.handle(message);
+            }
         }
 
         //check, if messageID exists

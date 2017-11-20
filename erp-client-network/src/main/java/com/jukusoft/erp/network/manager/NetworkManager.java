@@ -25,6 +25,10 @@ public interface NetworkManager {
 
     public void removeSubscriber (String event, Callback<Message> callback);
 
+    public void addGlobalSubscriber (Callback<Message> callback);
+
+    public void removeGlobalSubscriber (Callback<Message> callback);
+
     public void login (String username, String password, Callback<NetworkResult<Account>> callback);
 
     public void executeBlocking (Runnable runnable);
