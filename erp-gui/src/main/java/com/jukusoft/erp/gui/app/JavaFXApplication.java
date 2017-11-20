@@ -103,7 +103,7 @@ public class JavaFXApplication extends Application {
         });
 
         //add event listener for important notifications
-        EventBus.getInstance().addListener("warning_notification", (event, eventData) -> {
+        EventBus.getInstance().addListener("info_notification", (event, eventData) -> {
             Platform.runLater(() -> {
                 String title = eventData.getString("title");
                 String text = eventData.getString("text");
