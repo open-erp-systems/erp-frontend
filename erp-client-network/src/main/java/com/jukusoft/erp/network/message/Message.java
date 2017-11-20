@@ -95,7 +95,11 @@ public class Message implements JsonSerializable {
 
     @Override
     public String toString () {
-        return toJSON().encode();
+        if (data.containsKey("password")) {
+            return "Message (event: " + event + ", messageID: " + uuid.toString() + ", data: ********)";
+        } else {
+            return "Message (event: " + event + ", messageID: " + uuid.toString() + ", data: " + data.encode() + ")";
+        }
     }
 
     public String encode () {
