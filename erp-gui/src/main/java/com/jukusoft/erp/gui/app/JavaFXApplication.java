@@ -1,10 +1,12 @@
 package com.jukusoft.erp.gui.app;
 
+import com.jukusoft.erp.gui.eventbus.EventBus;
 import com.jukusoft.erp.gui.utils.JavaFXUtils;
 import com.jukusoft.erp.gui.window.LoginWindow;
 import com.jukusoft.erp.gui.window.MainWindow;
 import com.jukusoft.erp.network.manager.NetworkManager;
 import com.jukusoft.erp.network.user.Account;
+import io.vertx.core.json.JsonObject;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -82,21 +84,29 @@ public class JavaFXApplication extends Application {
         //hide login window
         this.loginWindow.setVisible(false);
 
-        //add event listener for warnings notifications#
-        NetworkManager.getInstance().addSubscriber("warning_notification", msg -> {
+        //redirect internal events to event bus
+        NetworkManager.getInstance().addGlobalSubscriber(msg -> {
+            if (msg.getEvent().startsWith("internal:")) {
+                //call eventbus
+                EventBus.getInstance().raiseEvent(msg);
+            }
+        });
+
+        //add event listener for warnings notifications
+        EventBus.getInstance().addListener("warning_notification", (event, eventData) -> {
             Platform.runLater(() -> {
-                String title = msg.getData().getString("title");
-                String text = msg.getData().getString("text");
+                String title = eventData.getString("title");
+                String text = eventData.getString("text");
 
                 JavaFXUtils.showErrorDialog(title, text);
             });
         });
 
-        //add event listener for important notifications#
-        NetworkManager.getInstance().addSubscriber("important_notification", msg -> {
+        //add event listener for important notifications
+        EventBus.getInstance().addListener("warning_notification", (event, eventData) -> {
             Platform.runLater(() -> {
-                String title = msg.getData().getString("title");
-                String text = msg.getData().getString("text");
+                String title = eventData.getString("title");
+                String text = eventData.getString("text");
 
                 JavaFXUtils.showInfoDialog(title, text);
             });
