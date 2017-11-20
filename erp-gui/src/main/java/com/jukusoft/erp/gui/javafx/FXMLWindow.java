@@ -85,4 +85,8 @@ public class FXMLWindow {
         }
     }
 
+    public void setFullscreen (boolean fullscreen) {
+        this.stage.setFullScreen(fullscreen);
+    }
+
 }

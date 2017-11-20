@@ -1,6 +1,7 @@
 package com.jukusoft.erp.gui.app;
 
 import com.jukusoft.erp.gui.window.LoginWindow;
+import com.jukusoft.erp.gui.window.MainWindow;
 import com.jukusoft.erp.network.manager.NetworkManager;
 import com.jukusoft.erp.network.user.Account;
 import javafx.application.Application;
@@ -21,6 +22,9 @@ public class JavaFXApplication extends Application {
 
     //login window
     protected LoginWindow loginWindow = null;
+
+    //main window
+    protected MainWindow mainWindow = null;
 
     //default configuration
     protected Ini ini = new Ini();
@@ -72,6 +76,14 @@ public class JavaFXApplication extends Application {
 
     protected void onLogin (Account account) {
         System.out.println("User '" + account.getUsername() + "' (userID: " + account.getUserID() + ") logged in successfully.");
+
+        //hide login window
+        this.loginWindow.setVisible(false);
+
+        //create and show new main window
+        this.mainWindow = new MainWindow(this.primaryStage, "OS ERP System");
+        this.mainWindow.setVisible(true);
+
     }
 
 }
