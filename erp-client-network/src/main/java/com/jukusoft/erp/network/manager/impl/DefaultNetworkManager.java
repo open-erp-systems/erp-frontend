@@ -113,7 +113,7 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
         System.out.println("Try to login user '" + username + "'...");
 
         //create new message
-        Message msg = Message.createRequest("/auth");
+        Message msg = Message.createRequest("/try-login");
 
         //fill message with authentification data
         msg.getData().put("username", username);
