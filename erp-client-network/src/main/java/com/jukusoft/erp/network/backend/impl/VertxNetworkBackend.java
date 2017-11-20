@@ -134,8 +134,12 @@ public class VertxNetworkBackend implements NetworkBackend<String> {
 
     @Override
     public void send(String msg) {
-        //log
-        System.out.println("WRITE: " + msg);
+        if (!msg.contains("password")) {
+            //log
+            System.out.println("WRITE: " + msg);
+        } else {
+            System.out.println("WRITE: ******** (contains password)");
+        }
 
         this.socket.write(msg);
     }
