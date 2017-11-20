@@ -1,5 +1,6 @@
 package com.jukusoft.erp.gui.app;
 
+import com.jukusoft.erp.gui.utils.JavaFXUtils;
 import com.jukusoft.erp.gui.window.LoginWindow;
 import com.jukusoft.erp.gui.window.MainWindow;
 import com.jukusoft.erp.network.manager.NetworkManager;
@@ -79,6 +80,22 @@ public class JavaFXApplication extends Application {
 
         //hide login window
         this.loginWindow.setVisible(false);
+
+        //add event listener for warnings notifications#
+        NetworkManager.getInstance().addSubscriber("warning_notification", msg -> {
+            String title = msg.getData().getString("title");
+            String text = msg.getData().getString("text");
+
+            JavaFXUtils.showErrorDialog(title, text);
+        });
+
+        //add event listener for important notifications#
+        NetworkManager.getInstance().addSubscriber("important_notification", msg -> {
+            String title = msg.getData().getString("title");
+            String text = msg.getData().getString("text");
+
+            JavaFXUtils.showInfoDialog(title, text);
+        });
 
         //create and show new main window
         this.mainWindow = new MainWindow(this.primaryStage, "OS ERP System");
