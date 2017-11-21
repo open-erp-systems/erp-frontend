@@ -8,7 +8,6 @@ import com.jukusoft.erp.gui.window.LoginWindow;
 import com.jukusoft.erp.gui.window.MainWindow;
 import com.jukusoft.erp.network.manager.NetworkManager;
 import com.jukusoft.erp.network.user.Account;
-import io.vertx.core.json.JsonObject;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
