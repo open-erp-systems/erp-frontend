@@ -1,6 +1,8 @@
 package com.jukusoft.erp.gui.app;
 
+import com.jukusoft.erp.gui.cache.Cache;
 import com.jukusoft.erp.gui.eventbus.EventBus;
+import com.jukusoft.erp.gui.logging.LocalConsoleLogger;
 import com.jukusoft.erp.gui.utils.JavaFXUtils;
 import com.jukusoft.erp.gui.window.LoginWindow;
 import com.jukusoft.erp.gui.window.MainWindow;
@@ -59,6 +61,9 @@ public class JavaFXApplication extends Application {
         //initialize networking
         this.networkManager = NetworkManager.getInstance();
         this.networkManager.init();
+
+        //initialize caching
+        Cache.init(new File("./cache"), new LocalConsoleLogger());
 
         //create and show new login window
         this.loginWindow = new LoginWindow(this.primaryStage, "ERP System - Login, (c) 2017 JuKuSoft.com", defaultCfg.getOrDefault("serverIP", ""), defaultCfg.getOrDefault("user", ""), this::onLogin);
