@@ -1,14 +1,11 @@
 package com.jukusoft.erp.gui.menu.impl;
 
 import com.jukusoft.erp.gui.cache.Cache;
-import com.jukusoft.erp.gui.cache.CacheManager;
 import com.jukusoft.erp.gui.cache.ICache;
 import com.jukusoft.erp.gui.eventbus.EventBus;
 import com.jukusoft.erp.gui.menu.MenuManager;
 import com.jukusoft.erp.network.manager.NetworkManager;
 import com.jukusoft.erp.network.message.Message;
-import com.jukusoft.erp.network.utils.Callback;
-import com.jukusoft.erp.network.utils.NetworkResult;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import javafx.application.Platform;
