@@ -8,6 +8,7 @@ module erp.gui {
     requires erp.client.network;
 
     exports com.jukusoft.erp.gui.app;
+    exports com.jukusoft.erp.gui.menu;
     opens com.jukusoft.erp.gui.controller;
 
 }
