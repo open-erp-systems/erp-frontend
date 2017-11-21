@@ -31,6 +31,9 @@ public class EventBus {
     * raise event
     */
     public void raiseEvent (String event, JsonObject eventData) {
+        //remove "internal:" if neccessary
+        event = event.replace("internal:", "");
+
         List<EventListener> list = this.eventListenerMap.get(event);
 
         if (list == null) {
@@ -65,6 +68,13 @@ public class EventBus {
 
         //raise internal event
         this.raiseEvent(event, eventData);
+    }
+
+    public void raiseEvent (String event, String param1) {
+        JsonObject json = new JsonObject();
+        json.put("param", param1);
+
+        this.raiseEvent(event, json);
     }
 
     public void addListener (String event, EventListener listener) {
