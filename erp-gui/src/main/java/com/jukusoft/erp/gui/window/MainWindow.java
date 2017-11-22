@@ -10,8 +10,8 @@ public class MainWindow extends FXMLWindow {
     public MainWindow(Stage stage, String title) {
         super(stage, title, 800, 600, "./data/fxml/main_window.fxml", new MainWindowController());
 
-        //set fullscreen
-        this.setFullscreen(true);
+        //maximize window
+        stage.setMaximized(true);
     }
 
 }
