@@ -26,7 +26,11 @@ public class WritableNetworkResult<T> implements NetworkResult<T> {
     @Override
     public String causeMessage() {
         if (this.causeMessage.isEmpty()) {
-            return this.cause.getMessage();
+            if (this.cause() != null) {
+                return this.cause.getMessage();
+            } else {
+                return "Unknown";
+            }
         } else {
             return this.causeMessage;
         }
