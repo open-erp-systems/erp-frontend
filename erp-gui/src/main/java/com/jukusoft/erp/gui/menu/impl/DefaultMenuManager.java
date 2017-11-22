@@ -61,7 +61,7 @@ public class DefaultMenuManager implements MenuManager {
             if (!res.result().succeeded()) {
                 JsonObject json = new JsonObject();
                 json.put("title", "Error");
-                json.put("text", "Couldnt load menu structure, error message: " + res.causeMessage());
+                json.put("text", "Couldnt load menu structure."/* + res.causeMessage()*/);
 
                 //show error dialog
                 EventBus.getInstance().raiseEvent("warning_notification", json);
