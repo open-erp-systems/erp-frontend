@@ -11,7 +11,7 @@ public class MainWindow extends FXMLWindow {
         super(stage, title, 1280, 720, "./data/fxml/main_window.fxml", new MainWindowController());
 
         //maximize window
-        stage.setMaximized(true);
+        //stage.setMaximized(true);
     }
 
 }
