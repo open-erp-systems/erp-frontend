@@ -44,6 +44,7 @@ public class DefaultMenuManager implements MenuManager {
 
         //load menu per network operation
         Message msg = Message.createRequest("/list-menus");
+        msg.getData().put("menuID", menuID);
 
         //send request to get menu structure
         NetworkManager.getInstance().send(msg, res -> {
