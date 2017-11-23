@@ -181,4 +181,9 @@ public class VertxNetworkBackend implements NetworkBackend<String> {
         });
     }
 
+    @Override
+    public void shutdown() {
+        this.vertx.close();
+    }
+
 }

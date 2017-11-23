@@ -81,6 +81,11 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
     }
 
     @Override
+    public void disconnect() {
+        this.networkBackend.disconnect();
+    }
+
+    @Override
     public boolean isConnected() {
         return this.networkBackend.isConnected();
     }
@@ -185,6 +190,15 @@ public class DefaultNetworkManager implements NetworkManager, MessageReceiver<St
     @Override
     public void executeBlocking(Runnable runnable) {
         this.networkBackend.executeBlocking(runnable);
+    }
+
+    @Override
+    public void shutdown() {
+        if (this.isConnected()) {
+            this.disconnect();
+        }
+
+        //shutdown network backend
     }
 
     @Override

@@ -62,4 +62,9 @@ public interface NetworkBackend<T> {
     */
     public long executeDelayed (long time, Runnable runnable);
 
+    /**
+    * shutdown network backend
+    */
+    public void shutdown ();
+
 }

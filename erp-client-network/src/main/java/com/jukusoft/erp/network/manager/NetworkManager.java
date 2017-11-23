@@ -15,6 +15,8 @@ public interface NetworkManager {
 
     public void connect (String ip, int port, Callback<NetworkResult<Boolean>> callback);
 
+    public void disconnect ();
+
     public boolean isConnected ();
 
     public boolean isConnecting ();
@@ -32,6 +34,8 @@ public interface NetworkManager {
     public void login (String username, String password, Callback<NetworkResult<Account>> callback);
 
     public void executeBlocking (Runnable runnable);
+
+    public void shutdown ();
 
     public static NetworkManager getInstance () {
         return DefaultNetworkManager.getManagerInstance();
