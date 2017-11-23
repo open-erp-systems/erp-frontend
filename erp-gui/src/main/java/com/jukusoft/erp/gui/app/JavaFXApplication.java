@@ -51,6 +51,11 @@ public class JavaFXApplication extends Application {
         this.primaryStage = primaryStage;
 
         primaryStage.setOnCloseRequest(event -> {
+            System.out.println("close application now.");
+
+            //shutdown network engine
+            NetworkManager.getInstance().shutdown();
+
             System.exit(0);
         });
 
